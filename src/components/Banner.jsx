@@ -1,12 +1,12 @@
 import logo from '../assets/GloboLogo.png';
 
-const Banner = () => {
+const Banner = ({children}) => {
   return (
-    <header>
-      <div>
-        <img src={logo} alt="logo" />
+    <header className="row mb-4">
+      <div className="col-5">
+        <img className="logo" src={logo} alt="logo" />
       </div>
-      <div>Providing houses all over the world</div>
+      <div className="subtitle col-7 mt-5">{children}</div>
     </header>
   );
 }
