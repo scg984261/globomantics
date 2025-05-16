@@ -1,6 +1,7 @@
 import currencyFormatter from "../helpers/currencyFormatter";
 
 const HouseRow = ({house, selectHouse}) => {
+  // throw new Error();
   return (
     <tr onClick={() => selectHouse(house)}>
       <td>{house.address}</td>
