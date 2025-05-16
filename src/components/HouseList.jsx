@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import HouseRow from './HouseRow';
+import AddHouseButton from './AddHouseButton';
 
 const HouseList = () => {
   const [houses, setHouses] = useState([]);
@@ -8,22 +9,11 @@ const HouseList = () => {
     const fetchHouses = async () => {
       const response = await fetch("https://localhost:4000/house");
       const houses = await response.json();
+      console.log(houses);
       setHouses(houses);
     };
     fetchHouses();
-  });
-
-  const addHouse = () => {
-    setHouses([
-      ...houses,
-      {
-        id: 6,
-        address: "32 Valley Way, New York",
-        country: "USA",
-        price: 1000000,
-      }
-    ]);
-  };
+  }, []);
 
   return (
     <>
@@ -42,9 +32,7 @@ const HouseList = () => {
           {houses.map(h => (<HouseRow key={h.id} house={h} />))}
         </tbody>
       </table>
-      <button onClick={addHouse} className="btn btn-primary">
-        Add
-      </button>
+      <AddHouseButton />
     </>
   );
 };
