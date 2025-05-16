@@ -1,18 +1,16 @@
-import { useEffect, useState } from 'react';
+import { use, useState } from 'react';
 import HouseRow from './HouseRow';
 
+// Declared outside of the main component function.
+// So will only be called once and not when component is re-rendered.
+const fetchHouses = fetch('https://localhost:4000/house')
+  .then(r => r.json());
+
 const HouseList = () => {
-  const [houses, setHouses] = useState([]);
-
-  useEffect(() => {
-    const fetchHouses = async () => {
-      const response = await fetch("https://localhost:4000/house");
-      const houses = await response.json();
-      setHouses(houses);
-    };
-    fetchHouses();
-  });
-
+  // Component will be in a state of suspense until fetch houses returns.
+  const houseResult = use(fetchHouses);
+  const [houses, setHouses] = useState(houseResult);
+  
   const addHouse = () => {
     setHouses([
       ...houses,
