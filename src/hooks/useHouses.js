@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-// import {}
 import loadingStatus from '../helpers/loadingStatus';
 
 const useHouses = () => {
@@ -18,6 +17,8 @@ const useHouses = () => {
         setLoadingState(loadingStatus.hasErrored);
       }
     };
+    // Fetch houses is an async operation, which does not work with useEffect hook.
+    // Therefore, need to wrap another async function and call it from useEffect.
     fetchHouses();
   }, []);
 
