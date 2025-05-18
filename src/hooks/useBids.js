@@ -4,6 +4,7 @@ import loadingStatus from "../helpers/loadingStatus";
 const useBids = (houseId) => {
   const [bids, setBids] = useState([]);
   const [loadingState, setLoadingState] = useState(loadingStatus.isLoading);
+  const [optimisticBids, addOptimisticBid] = useOptimistic(bids, (bids, newBid) => [...bids, newBid]);
   
   useEffect(() => {
     const fetchBids = async () => {
@@ -33,13 +34,20 @@ const useBids = (houseId) => {
   };
 
   const addBid = async (bid) => {
+    addOptimisticBid(bid);
+    console.log('Adding bid');
     // Await call to the API.
-    const postedBid = await postBid(bid);
+    const postedBid = await postBid(bid).then((postedBid) => {
+      console.log('Bid added');
+      console.log(postedBid);
+      return postedBid;
+    });
+
     // Use the set bids event hook to update the state of the application.
     setBids([...bids, postedBid]);
   };
 
-  return { bids, loadingState, addBid };
+  return { bids: optimisticBids, loadingState, addBid };
 };
 
 export default useBids;
