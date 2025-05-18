@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useOptimistic, useState } from "react";
 import loadingStatus from "../helpers/loadingStatus";
 
 const useBids = (houseId) => {
@@ -33,7 +33,9 @@ const useBids = (houseId) => {
   };
 
   const addBid = async (bid) => {
+    // Await call to the API.
     const postedBid = await postBid(bid);
+    // Use the set bids event hook to update the state of the application.
     setBids([...bids, postedBid]);
   };
 
